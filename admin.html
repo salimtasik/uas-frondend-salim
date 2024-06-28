@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Showroom Motor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px 0;
+        }
+        form {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        form button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #555;
+        }
+        .motor-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .motor-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: calc(50% - 10px);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .motor-item img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .motor-item h2 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .motor-item p {
+            margin-bottom: 10px;
+        }
+        .motor-item button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .motor-item button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="text-align: center;">Halaman Admin - Dealer Motor Resmi</h1>
+    </header>
+    <div class="container">
+        <form id="formTambahMotor">
+            <h2>Tambah Motor Baru</h2>
+            <label for="gambar">Gambar:</label>
+            <input type="text" id="gambar" name="gambar" placeholder="URL gambar" required><br>
+            <label for="nama">Nama Motor:</label>
+            <input type="text" id="nama" name="nama" placeholder="Nama motor" required><br>
+            <label for="deskripsi">Deskripsi:</label><br>
+            <textarea id="deskripsi" name="deskripsi" rows="4" placeholder="Deskripsi motor" required></textarea><br>
+            <label for="harga">Harga:</label>
+            <input type="text" id="harga" name="harga" placeholder="Harga motor" required><br>
+            <button href="index.html" type="submit">Tambah Motor</button>
+        </form>
+
+        <div class="motor-container">
+            <!-- Daftar motor akan dirender di sini -->
+        </div>
+
+        <!-- Formulir Edit Motor (contoh) -->
+        <form id="formEditMotor" style="display: none;">
+            <h2>Edit Motor</h2>
+            <input type="hidden" id="editId" name="editId">
+            <label for="editGambar">Gambar:</label>
+            <input type="text" id="editGambar" name="editGambar" placeholder="URL gambar" required><br>
+            <label for="editNama">Nama Motor:</label>
+            <input type="text" id="editNama" name="editNama" placeholder="Nama motor" required><br>
+            <label for="editDeskripsi">Deskripsi:</label><br>
+            <textarea id="editDeskripsi" name="editDeskripsi" rows="4" placeholder="Deskripsi motor" required></textarea><br>
+            <label for="editHarga">Harga:</label>
+            <input type="text" id="editHarga" name="editHarga" placeholder="Harga motor" required><br>
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+
+        <!-- Formulir Hapus Motor (contoh) -->
+        <form id="formHapusMotor" style="display: none;">
+            <h2>Hapus Motor</h2>
+            <input type="hidden" id="hapusId" name="hapusId">
+            <label for="hapusNama">Nama Motor:</label>
+            <input type="text" id="hapusNama" name="hapusNama" placeholder="Nama motor" required><br>
+            <button type="submit">Hapus Motor</button>
+        </form>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const formTambahMotor = document.getElementById("formTambahMotor");
+            const formEditMotor = document.getElementById("formEditMotor");
+            const formHapusMotor = document.getElementById("formHapusMotor");
+            const motorContainer = document.querySelector(".motor-container");
+
+            let motors = [
+                {
+                    gambar: "https://via.placeholder.com/150",
+                    nama: "Motor A",
+                    deskripsi: "Deskripsi Motor A",
+                    harga: "15000000"
+                },
+                {
+                    gambar: "https://via.placeholder.com/150",
+                    nama: "Motor B",
+                    deskripsi: "Deskripsi Motor B",
+                    harga: "20000000"
+                }
+            ];
+
+            function renderMotors() {
+                motorContainer.innerHTML = ""; // Kosongkan kontainer motor sebelum menambahkan item baru
+                motors.forEach(motor => {
+                    const motorItem = document.createElement("div");
+                    motorItem.classList.add("motor-item");
+                    motorItem.innerHTML = `
+                        <img src="${motor.gambar}" alt="${motor.nama}">
+                        <h2>${motor.nama}</h2>
+                        <p>${motor.deskripsi}</p>
+                        <p>Rp ${motor.harga}</p>
+                        <button onclick="editMotor('${motor.nama}')">Edit</button>
+                        <button onclick="hapusMotor('${motor.nama}')">Hapus</button>
+                    `;
+                    motorContainer.appendChild(motorItem);
+                });
+            }
+
+            renderMotors();
+
+            formTambahMotor.addEventListener("submit", function(event) {
+                event.preventDefault();
+                const gambar = formTambahMotor.gambar.value;
+                const nama = formTambahMotor.nama.value;
+                const deskripsi = formTambahMotor.deskripsi.value;
+                const harga = formTambahMotor.harga.value;
+
+                const newMotor = {
+                    gambar: gambar,
+                    nama: nama,
+                    deskripsi: deskripsi,
+                    harga: harga
+                };
+
+                motors.push(newMotor);
+                renderMotors();
+                formTambahMotor.reset();
+            });
+
+            window.editMotor = function(namaMotor) {
+                const motor = motors.find(motor => motor.nama === namaMotor);
+                if (motor) {
+                    formEditMotor.editId.value = motor.nama;
+                    formEditMotor.editGambar.value = motor.gambar;
+                    formEditMotor.editNama.value = motor.nama;
+                    formEditMotor.editDeskripsi.value = motor.deskripsi;
+                    formEditMotor.editHarga.value = motor.harga;
+                    formEditMotor.style.display = "block";
+                    formHapusMotor.style.display = "none";
+                }
+            }
+
+            formEditMotor.addEventListener("submit", function(event) {
+                event.preventDefault();
+                const id = formEditMotor.editId.value;
+                const gambar = formEditMotor.editGambar.value;
+                const nama = formEditMotor.editNama.value;
+                const deskripsi = formEditMotor.editDeskripsi.value;
+                const harga = formEditMotor.editHarga.value;
+
+                motors = motors.map(motor => {
+                    if (motor.nama === id) {
+                        return {
+                            gambar: gambar,
+                            nama: nama,
+                            deskripsi: deskripsi,
+                            harga: harga
+                        };
+                    } else {
+                        return motor;
+                    }
+                });
+
+                renderMotors();
+                formEditMotor.style.display = "none";
+                formEditMotor.reset();
+            });
+
+            window.hapusMotor = function(namaMotor) {
+                const motor = motors.find(motor => motor.nama === namaMotor);
+                if (motor) {
+                    formHapusMotor.hapusId.value = motor.nama;
+                    formHapusMotor.hapusNama.value = motor.nama;
+                    formHapusMotor.style.display = "block";
+                    formEditMotor.style.display = "none";
+                }
+            }
+
+            formHapusMotor.addEventListener("submit", function(event) {
+                event.preventDefault();
+                const id = formHapusMotor.hapusId.value;
+                motors = motors.filter(motor => motor.nama !== id);
+                renderMotors();
+                formHapusMotor.style.display = "";
+                formHapusMotor.reset();
+            });
+        });
+    </script>
+</body>
+</html>

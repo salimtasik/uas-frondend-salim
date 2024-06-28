@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Motor - Admin Showroom Motor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px 0;
+        }
+        form {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Menambahkan shadow */
+        }
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        form button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="text-align: center;">Edit Motor - Dealer Motor Resmi</h1>
+    </header>
+    <div class="container">
+        <!-- Formulir Edit Motor -->
+        <form id="formEditMotor">
+            <h2>Edit Motor</h2>
+            <input type="hidden" id="editId" name="editId"> <!-- ID disimpan di hidden input -->
+            <label for="editGambar">Gambar:</label>
+            <input type="text" id="editGambar" name="editGambar" placeholder="URL gambar" required><br>
+            <label for="editNama">Nama Motor:</label>
+            <input type="text" id="editNama" name="editNama" placeholder="Nama motor" required><br>
+            <label for="editDeskripsi">Deskripsi:</label><br>
+            <textarea id="editDeskripsi" name="editDeskripsi" rows="4" placeholder="Deskripsi motor" required></textarea><br>
+            <label for="editHarga">Harga:</label>
+            <input type="text" id="editHarga" name="editHarga" placeholder="Harga motor" required><br>
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const formEditMotor = document.getElementById("formEditMotor");
+
+            // Ambil data motor yang ingin diedit dari localStorage atau sumber data lain
+            const motorToEdit = JSON.parse(localStorage.getItem("motorToEdit"));
+
+            // Isi formulir edit dengan data motor yang akan diedit
+            formEditMotor.editId.value = motorToEdit.nama;
+            formEditMotor.editGambar.value = motorToEdit.gambar;
+            formEditMotor.editNama.value = motorToEdit.nama;
+            formEditMotor.editDeskripsi.value = motorToEdit.deskripsi;
+            formEditMotor.editHarga.value = motorToEdit.harga;
+
+            formEditMotor.addEventListener("submit", function(event) {
+                event.preventDefault();
+                const id = formEditMotor.editId.value;
+                const gambar = formEditMotor.editGambar.value;
+                const nama = formEditMotor.editNama.value;
+                const deskripsi = formEditMotor.editDeskripsi.value;
+                const harga = formEditMotor.editHarga.value;
+
+                // Perbarui motor yang sesuai dengan ID di localStorage atau sumber data lain
+                let motors = JSON.parse(localStorage.getItem("motors")) || [];
+                motors = motors.map(motor => {
+                    if (motor.nama === id) {
+                        return {
+                            gambar: gambar,
+                            nama: nama,
+                            deskripsi: deskripsi,
+                            harga: harga
+                        };
+                    } else {
+                        return motor;
+                    }
+                });
+
+                localStorage.setItem("motors", JSON.stringify(motors)); // Simpan pembaruan di localStorage
+                window.location.href = "index.html"; // Kembali ke halaman utama setelah penyimpanan
+            });
+        });
+    </script>
+</body>
+</html>

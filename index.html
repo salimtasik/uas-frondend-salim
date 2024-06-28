@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showroom Motor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #f0f0f0;
+            color: #0a0a0a;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 10px;
+        }
+        .logo {
+            max-width: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        .motor {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-gap: 20px;
+            margin-top: 20px;
+        }
+        .motor-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center; /* Mengubah text-align menjadi left untuk rata kiri */
+        }
+        .motor-item img {
+            max-width: 60%;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px; /* Menambahkan margin bawah pada gambar */
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <head>
+            <img src="logo-lp3i.png" alt="LP3I" class="logo">
+        </head>
+    </div>
+    <header>
+        <h1>Dealer Motor Resmi</h1>
+        <p>Berikut ini adalah beberapa motor yang tersedia:</p>
+    </header>
+    <div class="container">
+        <div class="motor">
+            <div class="motor-item">
+                <img src="adv.webp" alt="Motor 1">
+                <h2>Honda ADV</h2>
+                <p style="text-align: left;">Honda ADV menjadi salah satu sepeda motor yang meramaikan segmen pasar skuter matic maxi di Indonesia. Rilis sejak tahun 2019.</p>
+                <p><strong>36.565.000</strong></p>
+            </div>
+            <div class="motor-item">
+                <img src="cbr.webp" alt="Motor 2">
+                <h2>Honda CBR</h2>
+                <p style="text-align: left;">Honda CBR150R adalah sebuah sepeda motor sport 4 tak 150cc yang merupakan bagian dari Seri Honda CBR keluaran A.P. </p>
+                <p><strong> 64.335.000</strong></p>
+            </div>
+            <div class="motor-item">
+                <img src="vario.webp" alt="Motor 3">
+                <h2>Vario 256</h2>
+                <p style="text-align: left;">Honda Vario 256 ini pertama kali diluncurkan PT Astra Honda Motor (AHM) dan keluaran terbaru. Motor enak di pakai</p>
+                <p><strong>23.110.000</strong></p>
+            </div>
+            <div class="motor-item">
+                <img src="supra.webp" alt="Motor 4">
+                <h2>Supra Bapak</h2>
+                <p>Motor gigi ini juga termasuk rekomendasi motor yang irit bensin dan nyaman untuk di gunakan</p>
+                <p><strong>19.400.000</strong></p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Materi kuliah Front End Development by Muhammad Salim|Politeknik LP3I Kampus Tasikmalaya</p>
+    </footer>
+</body>
+</html>
+    
